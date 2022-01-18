@@ -1,5 +1,6 @@
 <html lang="en">
 <title>W3.CSS Template</title>
+<link rel="icon" href="pic/icon.png" type="image/x-icon">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 外部連結到    -->
@@ -172,20 +173,21 @@
             <div class="w3-content" style="max-width:600px">
                 <h4 class="w3-center"><b>聯絡資訊</b></h4>
                 <p>想要知道更多關於我的資訊嗎，留下您的聯絡資料吧，讓我們成為將來的工作夥伴</p>
-                <form action="/contact.xlsx" target="_self">
+                <form name="表單">
                     <div class="w3-section">
-                        <label>名子</label>
-                        <input class="w3-input w3-border" type="text" name="Name" required>
+                        <label>名字</label>
+                        <input class="w3-input w3-border" type="text" name="名字" required>
                     </div>
                     <div class="w3-section">
                         <label>信箱</label>
-                        <input class="w3-input w3-border" type="text" name="Email" required>
+                        <input class="w3-input w3-border" type="text" name="信箱" required>
                     </div>
                     <div class="w3-section">
                         <label>電話</label>
-                        <input class="w3-input w3-border" type="text" name="Message" required>
+                        <input class="w3-input w3-border" type="text" name="電話" required>
                         <!--寄送資料按鈕  -->
                     </div>
+                    <div id="form_alerts"></div>
                     <button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">寄送</button>
 
                 </form>
@@ -251,7 +253,18 @@
     </div>
 
       <!--側邊三條可以打開選擇項目  -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        const scriptURL = "https://script.google.com/macros/s/AKfycbx0-xUxKj-7rngpE97mnWOeBBmXs2D0HKckxPUQgqVdxb93P1oodMewOIgk8uuw_RlR/exec"
+        const form = document.forms['表單']
+
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => $("#form_alerts").html("<div class='alert alert-success'>已收到您的訊息!</div>"))
+            .catch(error => $("#form_alerts").html("<div class='alert alert-danger'>無法傳送您的訊息!</div>"))
+        })
         // 打開右邊選單
         function w3_open() {
             document.getElementById("mySidebar").style.display = "block";
